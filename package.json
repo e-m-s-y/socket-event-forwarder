@@ -1,0 +1,25 @@
+{
+  "name": "@e-m-s-y/socket-event-forwarder",
+  "version": "0.0.1",
+  "description": "A plugin for forwarding real-time socket events from an Ark relay node towards connected clients.",
+  "author": "e-m-s-y",
+  "license": "MIT",
+  "main": "src/index.js",
+  "dependencies": {
+    "@arkecosystem/core-container": "^2.6.0-next.4",
+    "socket.io": "^2.3.0"
+  },
+  "homepage": "https://github.com/e-m-s-y/socket-event-forwarder",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-m-s-y/socket-event-forwarder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/e-m-s-y/socket-event-forwarder/issues"
+  },
+  "keywords": [
+    "arkecosystem",
+    "plugin",
+    "events"
+  ]
+}
