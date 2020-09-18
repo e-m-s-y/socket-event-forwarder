@@ -1,6 +1,6 @@
 exports.plugin = {
 	pkg: require('../package.json'),
-	defaults: require('./defaults'),
+	defaults: require('./defaults.json'),
 	alias: 'e-m-s-y:socket-event-forwarder',
 	io: undefined,
 	async register(container, options) {
