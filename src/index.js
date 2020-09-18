@@ -38,7 +38,7 @@ exports.plugin = {
 
 					if(transaction.confirmations >= Math.max(...options.confirmations)) {
 						transactions.splice(index, 1);
-						logger.info(`[${this.alias}] Removed transaction from memory.`);
+						logger.info(`[${this.alias}] Removed transaction since the max confirmations is reached.`);
 					}
 				}
 			});
