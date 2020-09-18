@@ -18,7 +18,7 @@ exports.plugin = {
 			}
 		}
 
-		if(options.transaction_confirmations.length) {
+		if(options.confirmations.length) {
 			const transactions = [];
 
 			eventEmitter.on('transaction.forged', transaction => {
