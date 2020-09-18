@@ -8,9 +8,10 @@ cd ~/{core-bridgechain}/plugins && git clone https://github.com/e-m-s-y/socket-e
 ```
 2 Open `~/.config/{ark-core}/{mainnet|devnet|testnet}/plugins.js` and add the plugin config at the bottom of the file.
 ```js
-"@emsy/socket-event-forwarder": {
-    port: 3333, // The port the socket server server will listen to.
-    events: ['block.applied', 'transaction.applied'],  // Events you want to forward.
+"@foly/socket-event-forwarder": {
+    "port": 3333, // The port the socket server server will listen to
+    "events": ['block.applied'],  // Events that you want to forward
+    "confirmations": [5, 15, 51] // The amount of confirmations needed before firing the transaction.confirmed event 
 }
 ```
 3 Bootstrap the plugin.
