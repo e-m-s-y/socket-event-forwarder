@@ -1,6 +1,8 @@
 # Socket event forwarder
 A plugin for forwarding real-time blockchain events through socket.io.
 
+Supported blockchain events can be found [here.](https://github.com/ArkEcosystem/core/blob/master/packages/core-event-emitter/src/index.ts#L12-L45)
+
 ## Custom events
 
 - `transaction.confirmed` fired when a transaction is confirmed for an configurable amount of times.
