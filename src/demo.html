@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>friendsoflittleyus</title>
+</head>
+<body>
+<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+<div class="container-fluid">
+    <h1>Real-time transaction confirmation demo</h1>
+    <p>
+        This is an example where a customer(you) purchases an item from a webshop.<br/>
+        The webshop executes business logic at the following transaction confirmations:
+    </p>
+    <ul>
+        <li>1) Inform the customer that the transaction is received.</li>
+        <li>2) Send the order to the warehouse.</li>
+        <li>3) Update inventory.</li>
+        <li>4) E-mail order summary to the customer.</li>
+        <li>5) Inform the customer that order process is completed.</li>
+    </ul>
+    <p>
+        You can try this yourself by sending 1 RAD to the following address: TY1t98ThWZyUtcC76RL3nS3wRVRrwQNM4h<br/>
+        <i class="small">No RAD tokens? You may use our <a href="https://t.me/nybbleFaucet">Telegram faucet</a> to get
+            some for free.</i><br/>
+        <i class="small">ARK desktop wallet Radians seed: <a href="http://37.34.60.90:4040">http://37.34.60.90:4040</a></i>
+    </p>
+    <div class="col-7 pt-4">
+        <label for="senderPublicKey">Your public key</label>
+        <input type="text" class="form-control" id="senderPublicKey" aria-describedby="senderPublicKeyHelp">
+        <small id="senderPublicKeyHelp" class="form-text text-muted">This is the public key of the address that you're sending the payment from.</small>
+        <div class="d-flex align-items-center pt-4">
+            <div id="spinner" class="spinner-border mr-3 text-success" role="status" aria-hidden="true"></div>
+            <span id="spinnerText">Waiting for payment...</span>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+	const socket = io('https://socket.radians.nl', {
+		transports: ['websocket']
+	});
+	socket.on('connect', function() {
+		console.log('Connected to socket!');
+	});
+	socket.on('error', function(data) {
+		console.error(data);
+	});
+	socket.on('transaction.confirmed', function(data) {
+		if(data.senderPublicKey === document.getElementById('senderPublicKey').value && data.recipientId === 'TY1t98ThWZyUtcC76RL3nS3wRVRrwQNM4h') {
+			switch(data.confirmations) {
+				case 1:
+					document.getElementById('spinnerText').innerHTML = 'Transaction received, starting order process...';
+					break;
+				case 2:
+					document.getElementById('spinnerText').innerHTML = 'Sending order to warehouse...';
+					break;
+				case 3:
+					document.getElementById('spinnerText').innerHTML = 'Updating inventory...';
+					break;
+				case 4:
+					document.getElementById('spinnerText').innerHTML = 'E-mailing order to customer...';
+					break;
+				case 5:
+					document.getElementById('spinner').remove();
+					document.getElementById('spinnerText').innerHTML = 'Order process completed!';
+					break;
+			}
+		}
+	});
+</script>
+</html>
+
