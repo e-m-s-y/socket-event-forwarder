@@ -47,7 +47,7 @@
 		if(data.senderPublicKey === document.getElementById('senderPublicKey').value && data.recipientId === 'TY1t98ThWZyUtcC76RL3nS3wRVRrwQNM4h') {
 			switch(data.confirmations) {
 				case 1:
-					document.getElementById('spinnerText').innerHTML = 'Transaction received, 1st confirmation';
+					document.getElementById('spinnerText').innerHTML = 'Transaction received, 1st confirmation...';
 					break;
 				case 2:
 					document.getElementById('spinnerText').innerHTML = '2nd confirmation...';
@@ -60,7 +60,7 @@
 					break;
 				case 5:
 					document.getElementById('spinner').remove();
-					document.getElementById('spinnerText').innerHTML = '5h confirmation, your funds are deposited to your exchange wallet!';
+					document.getElementById('spinnerText').innerHTML = '5th confirmation, your funds are deposited to your exchange wallet!';
 					break;
 			}
 		}
