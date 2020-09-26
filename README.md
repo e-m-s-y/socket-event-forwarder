@@ -5,7 +5,7 @@ Supported blockchain events can be found [here.](https://github.com/ArkEcosystem
 
 ## Custom events
 
-- `transaction.confirmed` fired when a transaction is confirmed for an configurable amount of times. [A demo can be found here.](https://radians.nl/realtime-transaction-confirmation-demo)
+- `transaction.confirmed` fired when a transaction is confirmed for a configurable amount of times. [A demo can be found here.](https://radians.nl/realtime-transaction-confirmation-demo)
 
 ## Installation
 1 Add the plugin to your relay node. 
