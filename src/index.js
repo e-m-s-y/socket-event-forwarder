@@ -24,7 +24,7 @@ exports.plugin = {
 				socketio.emit('relay.systeminformation', {
 					cpu: await si.cpu(),
 					memory: await si.mem(),
-					fs: await si.fsStats(),
+					fs: await si.fsSize(),
 					cpuTemperature: await si.cpuTemperature(),
 				});
 				logger.info(`[${this.alias}] Forwarded event relay.systeminformation`);
