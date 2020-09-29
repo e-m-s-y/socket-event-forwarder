@@ -1,4 +1,5 @@
 const pkg = require('../package.json');
+const si = require('systeminformation');
 
 exports.plugin = {
 	pkg: pkg,
@@ -18,7 +19,19 @@ exports.plugin = {
 			}
 		}
 
-		if(options.confirmations.length) {
+		if(options.customEvents.includes('relay.systeminformation')) {
+			setInterval(async() => {
+				socketio.emit('relay.systeminformation', {
+					cpu: await si.cpu(),
+					memory: await si.mem(),
+					fs: await si.fsStats(),
+					cpuTemperature: await si.cpuTemperature(),
+				});
+				logger.info(`[${this.alias}] Forwarded event relay.systeminformation`);
+			}, 5000);
+		}
+
+		if(options.customEvents.includes('transaction.confirmed') && options.confirmations.length) {
 			const transactions = [];
 
 			eventEmitter.on('transaction.forged', transaction => {
