@@ -22,7 +22,7 @@ exports.plugin = {
 		if(options.customEvents.includes('relay.systeminformation')) {
 			setInterval(async() => {
 				socketio.emit('relay.systeminformation', {
-					cpu: await si.cpu(),
+					cpu: await si.cpuCurrentspeed(),
 					memory: await si.mem(),
 					fs: await si.fsSize(),
 					cpuTemperature: await si.cpuTemperature(),
