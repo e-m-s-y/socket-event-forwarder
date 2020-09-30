@@ -44,7 +44,10 @@
 		console.error(data);
 	});
 	socket.on('systeminformation', function(data) {
-		console.log(JSON.stringify(data));
+		console.dirxml(data);
+	});
+	socket.on('network.latency', function(data) {
+		console.dirxml(data);
 	});
 	socket.on('transaction.confirmed', function(data) {
 		if(data.senderPublicKey === document.getElementById('senderPublicKey').value && data.recipientId === 'TY1t98ThWZyUtcC76RL3nS3wRVRrwQNM4h') {

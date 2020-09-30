@@ -3,5 +3,6 @@
   "events": [],
   "confirmations": [],
   "customEvents": [],
-  "systeminformationInterval": 5000
+  "systeminformationInterval": 5000,
+  "networkLatencyInterval": 10000
 }

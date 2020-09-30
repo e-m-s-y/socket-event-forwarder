@@ -44,6 +44,13 @@ exports.plugin = {
 			}, options.systeminformationInterval);
 		}
 
+		if(options.customEvents.includes('network.latency')) {
+			setInterval(async() => {
+				socketio.emit('network.latency', await si.inetChecksite('https://google.com'));
+				logger.info(`[${this.alias}] Forwarded event network.latency`);
+			}, options.networkLatencyInterval);
+		}
+
 		if(options.customEvents.includes('transaction.confirmed') && options.confirmations.length) {
 			const transactions = [];
 
