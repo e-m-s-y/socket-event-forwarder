@@ -8,6 +8,7 @@ exports.plugin = {
 	async register(container, options) {
 		const logger = container.resolvePlugin('logger');
 		const eventEmitter = container.resolvePlugin('event-emitter');
+		const blockchain = container.resolvePlugin('blockchain');
 		const socketio = require('socket.io')(options.port);
 
 		if(options.events.length) {
@@ -49,6 +50,15 @@ exports.plugin = {
 				socketio.emit('network.latency', await si.inetChecksite('https://google.com'));
 				logger.info(`[${this.alias}] Forwarded event network.latency`);
 			}, options.networkLatencyInterval);
+		}
+
+		if(options.customEvents.includes('blockheight.current')) {
+			setInterval(async() => {
+				const lastBlock = await blockchain.getLastBlock();
+
+				socketio.emit('blockheight.current', lastBlock ? lastBlock.data.height : 0);
+				logger.info(`[${this.alias}] Forwarded event blockheight.current`);
+			}, options.blockheightCurrentInterval);
 		}
 
 		if(options.customEvents.includes('transaction.confirmed') && options.confirmations.length) {
