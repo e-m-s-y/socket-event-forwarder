@@ -20,6 +20,7 @@ cd ~/{core-bridgechain}/plugins && git clone https://github.com/e-m-s-y/socket-e
     "events": ['block.applied'],  // Events that you want to forward
     "confirmations": [5, 15, 51] // The amount of confirmations needed before firing the transaction.confirmed event 
     "customEvents": ['transaction.confirmed', 'relay.systeminformation'] // Enabled custom events
+    "systeminformationInterval": 5000 // Interval of relay.systeminformation event
 }
 ```
 3 Bootstrap the plugin.

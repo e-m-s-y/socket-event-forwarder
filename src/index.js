@@ -48,7 +48,7 @@ exports.plugin = {
 
 				socketio.emit('relay.systeminformation', packet);
 				logger.info(`[${this.alias}] Forwarded event relay.systeminformation`);
-			}, 5000);
+			}, options.systeminformationInterval);
 		}
 
 		if(options.customEvents.includes('transaction.confirmed') && options.confirmations.length) {
