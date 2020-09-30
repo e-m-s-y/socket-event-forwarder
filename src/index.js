@@ -21,16 +21,24 @@ exports.plugin = {
 
 		if(options.customEvents.includes('relay.systeminformation')) {
 			setInterval(async() => {
-				const values = {
+				const packet = await si.get({
+					fs: [],
 					mem: '*',
 					currentLoad: '*',
 					cpuTemperature: '*',
-					fsSize: 'use, size, used',
 					osInfo: 'platform, release',
 					cpu: 'speed, cores, speedmin, speedmax, processors, physicalCores',
-				};
+				});
 
-				socketio.emit('relay.systeminformation', await si.get(values));
+				for(let disk of await si.fsSize()) {
+					packet.fs.push({
+						use: disk.use,
+						size: disk.size,
+						used: disk.used,
+					});
+				}
+
+				socketio.emit('relay.systeminformation', packet);
 				logger.info(`[${this.alias}] Forwarded event relay.systeminformation`);
 			}, options.systeminformationInterval);
 		}
