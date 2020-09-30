@@ -49,6 +49,9 @@
 	socket.on('network.latency', function(data) {
 		console.dirxml(data);
 	});
+	socket.on('blockheight.current', function(data) {
+		console.dirxml(data);
+	});
 	socket.on('transaction.confirmed', function(data) {
 		if(data.senderPublicKey === document.getElementById('senderPublicKey').value && data.recipientId === 'TY1t98ThWZyUtcC76RL3nS3wRVRrwQNM4h') {
 			switch(data.confirmations) {
