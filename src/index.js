@@ -21,13 +21,30 @@ exports.plugin = {
 
 		if(options.customEvents.includes('relay.systeminformation')) {
 			setInterval(async() => {
-				socketio.emit('relay.systeminformation', {
-					cpu: await si.cpu(),
-					fs: await si.fsSize(),
+				const packet = {
+					fs: {},
+					cpu: {},
 					memory: await si.mem(),
 					load: await si.currentLoad(),
 					cpuTemperature: await si.cpuTemperature(),
-				});
+				};
+
+				const fs = await si.fsSize();
+
+				packet.fs.use = fs.use;
+				packet.fs.size = fs.size;
+				packet.fs.used = fs.used;
+
+				const cpu = await si.cpu();
+
+				packet.cpu.speed = cpu.speed;
+				packet.cpu.cores = cpu.cores;
+				packet.cpu.speedmin = cpu.speedmin;
+				packet.cpu.speedmax = cpu.speedmax;
+				packet.cpu.processors = cpu.processors;
+				packet.cpu.physicalCores = cpu.physicalCores;
+
+				socketio.emit('relay.systeminformation', packet);
 				logger.info(`[${this.alias}] Forwarded event relay.systeminformation`);
 			}, 5000);
 		}
