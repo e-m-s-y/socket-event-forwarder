@@ -2,8 +2,5 @@
   "port": 3000,
   "events": [],
   "confirmations": [],
-  "customEvents": [
-    "transaction.confirmed",
-    "relay.systeminformation"
-  ]
+  "customEvents": []
 }
