@@ -6,7 +6,7 @@ Supported blockchain events can be found [here.](https://github.com/ArkEcosystem
 ## Custom events
 
 - `transaction.confirmed` fired when a transaction is confirmed for a configurable amount of times. [A demo can be found here.](https://radians.nl/realtime-transaction-confirmation-demo)
-- `relay.systeminformation` fires system information like CPU, memory and filesystem stats at an configurable interval.
+- `systeminformation` fires system information like CPU, memory and filesystem stats at an configurable interval.
 
 ## Installation
 1 Add the plugin to your relay node. 
@@ -19,7 +19,7 @@ cd ~/{core-bridgechain}/plugins && git clone https://github.com/e-m-s-y/socket-e
     "port": 3333, // The port of the socket server
     "events": ['block.applied'],  // Events that you want to forward
     "confirmations": [5, 15, 51] // The amount of confirmations needed before firing the transaction.confirmed event 
-    "customEvents": ['transaction.confirmed', 'relay.systeminformation'] // Enabled custom events
+    "customEvents": ['transaction.confirmed', 'systeminformation'] // Enabled custom events
     "systeminformationInterval": 5000 // Interval of relay.systeminformation event
 }
 ```

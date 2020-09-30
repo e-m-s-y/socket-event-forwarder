@@ -43,7 +43,7 @@
 	socket.on('error', function(data) {
 		console.error(data);
 	});
-	socket.on('relay.systeminformation', function(data) {
+	socket.on('systeminformation', function(data) {
 		console.log(JSON.stringify(data));
 	});
 	socket.on('transaction.confirmed', function(data) {

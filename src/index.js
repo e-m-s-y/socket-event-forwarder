@@ -19,7 +19,7 @@ exports.plugin = {
 			}
 		}
 
-		if(options.customEvents.includes('relay.systeminformation')) {
+		if(options.customEvents.includes('systeminformation')) {
 			setInterval(async() => {
 				const packet = await si.get({
 					mem: '*',
@@ -39,8 +39,8 @@ exports.plugin = {
 					});
 				}
 
-				socketio.emit('relay.systeminformation', packet);
-				logger.info(`[${this.alias}] Forwarded event relay.systeminformation`);
+				socketio.emit('systeminformation', packet);
+				logger.info(`[${this.alias}] Forwarded event systeminformation`);
 			}, options.systeminformationInterval);
 		}
 
