@@ -22,13 +22,14 @@ exports.plugin = {
 		if(options.customEvents.includes('relay.systeminformation')) {
 			setInterval(async() => {
 				const packet = await si.get({
-					fs: [],
 					mem: '*',
 					currentLoad: '*',
 					cpuTemperature: '*',
 					osInfo: 'platform, release',
 					cpu: 'speed, cores, speedmin, speedmax, processors, physicalCores',
 				});
+
+				packet.fs = [];
 
 				for(let disk of await si.fsSize()) {
 					packet.fs.push({
