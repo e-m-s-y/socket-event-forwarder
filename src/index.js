@@ -22,18 +22,20 @@ exports.plugin = {
 		if(options.customEvents.includes('relay.systeminformation')) {
 			setInterval(async() => {
 				const packet = {
-					fs: {},
+					fs: [],
 					cpu: {},
 					memory: await si.mem(),
 					load: await si.currentLoad(),
 					cpuTemperature: await si.cpuTemperature(),
 				};
 
-				const fs = await si.fsSize();
-
-				packet.fs.use = fs.use;
-				packet.fs.size = fs.size;
-				packet.fs.used = fs.used;
+				for(let disk of await si.fsSize()) {
+					packet.fs.push({
+						use: disk.use,
+						size: disk.size,
+						used: disk.used,
+					});
+				}
 
 				const cpu = await si.cpu();
 
