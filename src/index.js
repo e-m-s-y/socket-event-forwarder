@@ -22,10 +22,10 @@ exports.plugin = {
 		if(options.customEvents.includes('relay.systeminformation')) {
 			setInterval(async() => {
 				const values = {
-					load: '*',
-					memory: '*',
+					mem: '*',
+					currentLoad: '*',
 					cpuTemperature: '*',
-					fs: 'use, size, used',
+					fsSize: 'use, size, used',
 					osInfo: 'platform, release',
 					cpu: 'speed, cores, speedmin, speedmax, processors, physicalCores',
 				};
