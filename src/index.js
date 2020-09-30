@@ -22,9 +22,10 @@ exports.plugin = {
 		if(options.customEvents.includes('relay.systeminformation')) {
 			setInterval(async() => {
 				socketio.emit('relay.systeminformation', {
-					cpu: await si.cpuCurrentspeed(),
-					memory: await si.mem(),
+					cpu: await si.cpu(),
 					fs: await si.fsSize(),
+					memory: await si.mem(),
+					load: await si.currentLoad(),
 					cpuTemperature: await si.cpuTemperature(),
 				});
 				logger.info(`[${this.alias}] Forwarded event relay.systeminformation`);
