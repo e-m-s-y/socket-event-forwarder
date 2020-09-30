@@ -1,4 +1,5 @@
 const pkg = require('../package.json');
+const si = require('systeminformation');
 
 exports.plugin = {
 	pkg: pkg,
@@ -18,7 +19,32 @@ exports.plugin = {
 			}
 		}
 
-		if(options.confirmations.length) {
+		if(options.customEvents.includes('systeminformation')) {
+			setInterval(async() => {
+				const packet = await si.get({
+					mem: '*',
+					currentLoad: '*',
+					cpuTemperature: '*',
+					osInfo: 'platform, release',
+					cpu: 'speed, cores, speedmin, speedmax, processors, physicalCores',
+				});
+
+				packet.fs = [];
+
+				for(let disk of await si.fsSize()) {
+					packet.fs.push({
+						use: disk.use,
+						size: disk.size,
+						used: disk.used,
+					});
+				}
+
+				socketio.emit('systeminformation', packet);
+				logger.info(`[${this.alias}] Forwarded event systeminformation`);
+			}, options.systeminformationInterval);
+		}
+
+		if(options.customEvents.includes('transaction.confirmed') && options.confirmations.length) {
 			const transactions = [];
 
 			eventEmitter.on('transaction.forged', transaction => {

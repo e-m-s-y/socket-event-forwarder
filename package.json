@@ -1,12 +1,13 @@
 {
   "name": "@foly/socket-event-forwarder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A plugin which sends real-time socket events from an Ark node towards connected clients.",
   "author": "emsy",
   "license": "MIT",
   "main": "src/index.js",
   "dependencies": {
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "systeminformation": "^4.27.5"
   },
   "homepage": "https://github.com/e-m-s-y/socket-event-forwarder",
   "repository": {
