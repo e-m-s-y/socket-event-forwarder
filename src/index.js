@@ -17,6 +17,8 @@ exports.plugin = {
 				eventEmitter.on(event, async(data) => {
 					if(event === 'block.forged') {
 						data.generator = await database.wallets.findById(data.generatorPublicKey);
+
+						logger.info(data);
 					}
 
 					socketio.emit(event, data);
