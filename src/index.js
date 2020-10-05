@@ -9,7 +9,7 @@ exports.plugin = {
 		const logger = container.resolvePlugin('logger');
 		const eventEmitter = container.resolvePlugin('event-emitter');
 		const blockchain = container.resolvePlugin('blockchain');
-		const database = container.container('database');
+		const database = container.resolvePlugin('database');
 		const socketio = require('socket.io')(options.port);
 
 		if(options.events.length) {
