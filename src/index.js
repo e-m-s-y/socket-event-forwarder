@@ -9,11 +9,16 @@ exports.plugin = {
 		const logger = container.resolvePlugin('logger');
 		const eventEmitter = container.resolvePlugin('event-emitter');
 		const blockchain = container.resolvePlugin('blockchain');
+		const database = container.container('database');
 		const socketio = require('socket.io')(options.port);
 
 		if(options.events.length) {
 			for(let event of options.events) {
 				eventEmitter.on(event, async(data) => {
+					if(event === 'block.forged') {
+						data.generator = database.wallets.findById(data.generatorPublicKey);
+					}
+
 					socketio.emit(event, data);
 					logger.info(`[${this.alias}] Forwarded event ${event}`);
 				});
