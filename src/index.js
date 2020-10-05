@@ -15,7 +15,7 @@ exports.plugin = {
 		if(options.events.length) {
 			for(let event of options.events) {
 				eventEmitter.on(event, async(data) => {
-					if(event === 'block.forged') {
+					if(data.generatorPublicKey) {
 						data.username = await database.walletManager
 							.findByPublicKey(data.generatorPublicKey)
 							.getAttribute('delegate.username');
