@@ -19,9 +19,9 @@ cd ~/{core-bridgechain}/plugins && git clone https://github.com/e-m-s-y/socket-e
 ```js
 "@foly/socket-event-forwarder": {
     port: 3333, // The port of the socket server
-    events: ['block.applied'],  // Events that you want to forward
+    events: ["block.applied"],  // Events that you want to forward
     confirmations: [5, 15, 51], // The amount of confirmations needed before firing the transaction.confirmed event 
-    customEvents: ['transaction.confirmed', 'systeminformation', 'network.latency'], // Enabled custom events
+    customEvents: ["transaction.confirmed", "systeminformation", "network.latency"], // Enabled custom events
     systeminformationInterval: 5000, // Interval of systeminformation event
     networkLatencyInterval: 10000, // Interval of network.latency event
     blockheightCurrentInterval: 10000 // Interval of blockheight.current event
