@@ -11,11 +11,19 @@ Supported blockchain events can be found [here.](https://github.com/ArkEcosystem
 - `blockheight.current` fires the current synced blockheight at an configurable interval.
 
 ## Installation
-1 Add the plugin to your relay node. 
-```bash
-cd ~/{core-bridgechain}/plugins && git clone https://github.com/e-m-s-y/socket-event-forwarder
-```
-2 Open `~/.config/{bridgechain-core}/{mainnet|devnet|testnet}/plugins.js` and add the plugin config at the bottom of the file.
+#### From source
+
+1. clone the plugin with `cd ~/{core-bridgechain}/plugins && git clone https://github.com/e-m-s-y/socket-event-forwarder`
+2. add plugin configuration to the bottom of `~/.config/{bridgechain-core}/{mainnet|devnet|testnet}/plugins.js`
+3. bootstrap the plugin `cd ~/{core-bridgechain}/plugins && yarn bootstrap`
+4. restart your relay / forger process.
+
+#### Yarn
+1. `yarn global add @foly/socket-event-forwarder`
+2. add plugin configuration to the bottom of `~/.config/{bridgechain-core}/{mainnet|devnet|testnet}/plugins.js`
+3. restart your relay / forger process.
+
+#### Example configuration
 ```js
 "@foly/socket-event-forwarder": {
     port: 3333, // The port of the socket server
@@ -27,13 +35,6 @@ cd ~/{core-bridgechain}/plugins && git clone https://github.com/e-m-s-y/socket-e
     blockheightCurrentInterval: 10000 // Interval of blockheight.current event
 }
 ```
-3 Bootstrap the plugin.
-```bash
-cd ~/{core-bridgechain}
-yarn bootstrap
-```
-4 Restart your relay.
-
 ## Credits
 
 - [e-m-s-y](https://github.com/e-m-s-y)
