@@ -18,13 +18,13 @@ cd ~/{core-bridgechain}/plugins && git clone https://github.com/e-m-s-y/socket-e
 2 Open `~/.config/{bridgechain-core}/{mainnet|devnet|testnet}/plugins.js` and add the plugin config at the bottom of the file.
 ```js
 "@foly/socket-event-forwarder": {
-    "port": 3333, // The port of the socket server
-    "events": ['block.applied'],  // Events that you want to forward
-    "confirmations": [5, 15, 51] // The amount of confirmations needed before firing the transaction.confirmed event 
-    "customEvents": ['transaction.confirmed', 'systeminformation', 'network.latency'] // Enabled custom events
-    "systeminformationInterval": 5000, // Interval of systeminformation event
-    "networkLatencyInterval": 10000, // Interval of network.latency event
-    "blockheightCurrentInterval": 10000 // Interval of blockheight.current event
+    port: 3333, // The port of the socket server
+    events: ['block.applied'],  // Events that you want to forward
+    confirmations: [5, 15, 51], // The amount of confirmations needed before firing the transaction.confirmed event 
+    customEvents: ['transaction.confirmed', 'systeminformation', 'network.latency'], // Enabled custom events
+    systeminformationInterval: 5000, // Interval of systeminformation event
+    networkLatencyInterval: 10000, // Interval of network.latency event
+    blockheightCurrentInterval: 10000 // Interval of blockheight.current event
 }
 ```
 3 Bootstrap the plugin.
