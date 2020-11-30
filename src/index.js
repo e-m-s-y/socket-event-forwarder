@@ -71,8 +71,14 @@ exports.plugin = {
 		if(options.customEvents.includes('transaction.confirmed') && options.confirmations.length) {
 			const transactions = [];
 
-			eventEmitter.on('transaction.forged', transaction => {
+			eventEmitter.on('transaction.forged', async transaction => {
 				transaction.confirmations = 0;
+
+				if(transaction.senderPublicKey) {
+					transaction.senderId = await database.walletManager
+						.findByPublicKey(transaction.senderPublicKey)
+						.address;
+				}
 
 				transactions.push(transaction);
 			});
