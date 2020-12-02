@@ -71,7 +71,7 @@ exports.plugin = {
 		if(options.customEvents.includes('transaction.confirmed') && options.confirmations.length) {
 			const transactions = [];
 
-			eventEmitter.on('transaction.forged', async transaction => {
+			eventEmitter.on('transaction.applied', async transaction => {
 				transaction.confirmations = 0;
 
 				if(transaction.senderPublicKey) {
@@ -83,7 +83,7 @@ exports.plugin = {
 				transactions.push(transaction);
 			});
 
-			eventEmitter.on('block.forged', () => {
+			eventEmitter.on('block.applied', () => {
 				for(const [index, transaction] of transactions.entries()) {
 					transaction.confirmations += 1;
 
