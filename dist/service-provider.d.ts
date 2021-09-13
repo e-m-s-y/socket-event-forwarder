@@ -4,6 +4,6 @@ export declare class ServiceProvider extends Providers.ServiceProvider {
     private service;
     register(): Promise<void>;
     boot(): Promise<void>;
-    bootWhen(serviceProvider?: string): Promise<boolean>;
+    bootWhen(): Promise<boolean>;
     dispose(): Promise<void>;
 }

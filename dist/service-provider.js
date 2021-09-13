@@ -21,7 +21,10 @@ class ServiceProvider extends core_kernel_1.Providers.ServiceProvider {
         this.service = service_1.default.ID;
     }
     async register() {
+        const logger = this.app.get(core_kernel_1.Container.Identifiers.LogService);
+        logger.info("hello world");
         this.logger.info("register function" + service_1.default.ID);
+        this.logger.info(JSON.stringify(this.config().all()));
         this.app.bind(this.service).to(service_1.default).inSingletonScope();
     }
     async boot() {
@@ -30,11 +33,9 @@ class ServiceProvider extends core_kernel_1.Providers.ServiceProvider {
         await this.app.get(this.service).listen(options);
         this.logger.info("Plugin booted");
     }
-    async bootWhen(serviceProvider) {
+    async bootWhen() {
         this.logger.info("bootWhen");
-        this.logger.info(JSON.stringify(this.config().all()));
-        this.logger.info(JSON.stringify(serviceProvider));
-        return !!this.config().get("enabled") && serviceProvider === "@arkecosystem/core-blockchain";
+        return !!this.config().get("enabled");
     }
     async dispose() {
         this.logger.info("Stop plugin, close everything here");

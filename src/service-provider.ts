@@ -10,7 +10,12 @@ export class ServiceProvider extends Providers.ServiceProvider {
     private service = Service.ID;
 
     public async register(): Promise<void> {
+        const logger = this.app.get<Contracts.Kernel.Logger>(Container.Identifiers.LogService);
+
+        logger.info("hello world");
+
         this.logger.info("register function" + Service.ID);
+        this.logger.info(JSON.stringify(this.config().all()));
         this.app.bind(this.service).to(Service).inSingletonScope();
     }
 
@@ -23,11 +28,9 @@ export class ServiceProvider extends Providers.ServiceProvider {
         this.logger.info("Plugin booted");
     }
 
-    public async bootWhen(serviceProvider?: string): Promise<boolean> {
+    public async bootWhen(): Promise<boolean> {
         this.logger.info("bootWhen");
-        this.logger.info(JSON.stringify(this.config().all()));
-        this.logger.info(JSON.stringify(serviceProvider));
-        return !!this.config().get("enabled") && serviceProvider === "@arkecosystem/core-blockchain";
+        return !!this.config().get("enabled");
     }
 
     public async dispose(): Promise<void> {
