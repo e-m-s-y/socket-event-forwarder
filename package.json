@@ -1,35 +1,32 @@
 {
-  "name": "@foly/socket-event-forwarder",
-  "version": "2.0.0",
-  "description": "A plugin which sends real-time socket events from an bridgechain node towards connected clients.",
-  "author": "emsy",
-  "license": "MIT",
-  "main": "dist/service-provider.js",
-  "dependencies": {
-    "socket.io": "^2.3.0",
-    "systeminformation": "^5.8.9"
-  },
-  "scripts": {
-    "compile": "../../node_modules/typescript/bin/tsc",
-    "build": "yarn clean && yarn compile",
-    "clean": "rimraf dist"
-  },
-  "homepage": "https://github.com/e-m-s-y/socket-event-forwarder",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/e-m-s-y/socket-event-forwarder.git"
-  },
-  "bugs": {
-    "url": "https://github.com/e-m-s-y/socket-event-forwarder/issues"
-  },
-  "keywords": [
-    "arkecosystem",
-    "bridgechain",
-    "plugin",
-    "events"
-  ],
-  "devDependencies": {
-    "@arkecosystem/core-kernel": "3.0.0-next.35",
-    "@types/node": "^16.9.1"
-  }
+    "name": "@foly/socket-event-forwarder",
+    "version": "2.0.0",
+    "description": "A plugin which sends real-time socket events from an bridgechain node towards connected clients.",
+    "author": "emsy",
+    "license": "MIT",
+    "main": "dist/service-provider.js",
+    "dependencies": {
+        "@arkecosystem/core-kernel": "3.0.0-next.35",
+        "socket.io": "^2.3.0",
+        "systeminformation": "^5.8.9"
+    },
+    "scripts": {
+        "compile": "../../node_modules/typescript/bin/tsc",
+        "build": "yarn clean && yarn compile",
+        "clean": "rimraf dist"
+    },
+    "homepage": "https://github.com/e-m-s-y/socket-event-forwarder",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/e-m-s-y/socket-event-forwarder.git"
+    },
+    "bugs": {
+        "url": "https://github.com/e-m-s-y/socket-event-forwarder/issues"
+    },
+    "keywords": [
+        "arkecosystem",
+        "bridgechain",
+        "plugin",
+        "events"
+    ]
 }
