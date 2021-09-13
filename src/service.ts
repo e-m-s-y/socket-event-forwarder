@@ -6,18 +6,21 @@ import { IOptions } from "./interfaces";
 export default class Service {
     public static readonly ID = "@foly/socket-event-forwarder";
 
-    @Container.inject(Container.Identifiers.EventDispatcherService)
-    private readonly emitter!: Contracts.Kernel.EventDispatcher;
-
-    @Container.inject(Container.Identifiers.LogService)
-    private readonly logger!: Contracts.Kernel.Logger;
+    @Container.inject(Container.Identifiers.Application)
+    private readonly app!: Contracts.Kernel.Application;
 
     public async listen(options: IOptions): Promise<void> {
-        this.logger.info("in listen function");
+        const logger = this.app.get<Contracts.Kernel.Logger>(Container.Identifiers.LogService);
 
-        this.emitter.listen("block.forged", {
+        logger.info(JSON.stringify(options));
+
+        const emitter = this.app.get<Contracts.Kernel.EventDispatcher>(Container.Identifiers.EventDispatcherService);
+
+        emitter.listen("block.applied", {
             handle: async (payload: any) => {
-                this.logger.debug(JSON.stringify(payload));
+                const data = JSON.stringify(payload);
+
+                logger.debug(`[${Service.ID}] ${data}`);
             },
         });
     }

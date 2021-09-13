@@ -8,28 +8,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var Service_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_kernel_1 = require("@arkecosystem/core-kernel");
-let Service = class Service {
+let Service = Service_1 = class Service {
     async listen(options) {
-        this.logger.info("in listen function");
-        this.emitter.listen("block.forged", {
+        const logger = this.app.get(core_kernel_1.Container.Identifiers.LogService);
+        logger.info(JSON.stringify(options));
+        const emitter = this.app.get(core_kernel_1.Container.Identifiers.EventDispatcherService);
+        emitter.listen("block.applied", {
             handle: async (payload) => {
-                this.logger.debug(JSON.stringify(payload));
+                const data = JSON.stringify(payload);
+                logger.debug(`[${Service_1.ID}] ${data}`);
             },
         });
     }
 };
 Service.ID = "@foly/socket-event-forwarder";
 __decorate([
-    core_kernel_1.Container.inject(core_kernel_1.Container.Identifiers.EventDispatcherService),
+    core_kernel_1.Container.inject(core_kernel_1.Container.Identifiers.Application),
     __metadata("design:type", Object)
-], Service.prototype, "emitter", void 0);
-__decorate([
-    core_kernel_1.Container.inject(core_kernel_1.Container.Identifiers.LogService),
-    __metadata("design:type", Object)
-], Service.prototype, "logger", void 0);
-Service = __decorate([
+], Service.prototype, "app", void 0);
+Service = Service_1 = __decorate([
     core_kernel_1.Container.injectable()
 ], Service);
 exports.default = Service;
