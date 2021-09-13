@@ -12,15 +12,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core_kernel_1 = require("@arkecosystem/core-kernel");
 let Service = class Service {
     async listen(options) {
-        this.logger.info('in listen function');
-        this.emitter.listen('block.forged', {
+        this.logger.info("in listen function");
+        this.emitter.listen("block.forged", {
             handle: async (payload) => {
                 this.logger.debug(JSON.stringify(payload));
             },
         });
     }
 };
-Service.ID = '@foly/socket-event-forwarder';
+Service.ID = "@foly/socket-event-forwarder";
 __decorate([
     core_kernel_1.Container.inject(core_kernel_1.Container.Identifiers.EventDispatcherService),
     __metadata("design:type", Object)

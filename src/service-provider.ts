@@ -25,7 +25,8 @@ export class ServiceProvider extends Providers.ServiceProvider {
 
     public async bootWhen(serviceProvider?: string): Promise<boolean> {
         this.logger.info("bootWhen");
-        this.logger.info(serviceProvider);
+        this.logger.info(JSON.stringify(this.config().all()));
+        this.logger.info(JSON.stringify(serviceProvider));
         return !!this.config().get("enabled") && serviceProvider === "@arkecosystem/core-blockchain";
     }
 

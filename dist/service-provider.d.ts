@@ -1,4 +1,4 @@
-import { Providers } from '@arkecosystem/core-kernel';
+import { Providers } from "@arkecosystem/core-kernel";
 export declare class ServiceProvider extends Providers.ServiceProvider {
     private readonly logger;
     private service;

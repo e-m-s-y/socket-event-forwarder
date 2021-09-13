@@ -21,23 +21,23 @@ class ServiceProvider extends core_kernel_1.Providers.ServiceProvider {
         this.service = service_1.default.ID;
     }
     async register() {
-        this.logger.info('register function' + service_1.default.ID);
+        this.logger.info("register function" + service_1.default.ID);
         this.app.bind(this.service).to(service_1.default).inSingletonScope();
     }
     async boot() {
         const options = this.config().all();
         this.logger.info(JSON.stringify(options));
         await this.app.get(this.service).listen(options);
-        this.logger.info('Plugin booted');
+        this.logger.info("Plugin booted");
     }
     async bootWhen(serviceProvider) {
-        this.logger.info('bootWhen');
-        this.logger.info(serviceProvider);
-        return !!this.config().get('enabled') && serviceProvider === '@arkecosystem/core-blockchain';
+        this.logger.info("bootWhen");
+        this.logger.info(JSON.stringify(this.config().all()));
+        this.logger.info(JSON.stringify(serviceProvider));
+        return !!this.config().get("enabled") && serviceProvider === "@arkecosystem/core-blockchain";
     }
     async dispose() {
-        // TODO: make sure plugin is stopped gracefully
-        this.logger.info('Stop plugin, close everything here');
+        this.logger.info("Stop plugin, close everything here");
     }
 }
 __decorate([
