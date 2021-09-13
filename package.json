@@ -27,5 +27,9 @@
     "bridgechain",
     "plugin",
     "events"
-  ]
+  ],
+  "devDependencies": {
+    "@arkecosystem/core-kernel": "3.0.0-next.35",
+    "@types/node": "^16.9.1"
+  }
 }
