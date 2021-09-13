@@ -6,5 +6,5 @@ export const defaults = {
     customEvents: [],
     systeminformationInterval: 5000,
     networkLatencyInterval: 10000,
-    blockheightCurrentInterval: 10000
+    blockheightCurrentInterval: 10000,
 };
