@@ -45,5 +45,14 @@ export default class Service {
                 logger.debug(`[${Service.ID}] Forwarded event network.latency`);
             }, options.networkLatencyInterval);
         }
+
+        if (options.customEvents.includes("blockheight.current")) {
+            const stateStore = this.app.get<Contracts.State.StateStore>(Container.Identifiers.StateStore);
+
+            setInterval(async () => {
+                this.server.emit("blockheight.current", stateStore.getLastHeight());
+                logger.debug(`[${Service.ID}] Forwarded event blockheight.current`);
+            }, options.blockheightCurrentInterval);
+        }
     }
 }
