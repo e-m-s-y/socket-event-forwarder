@@ -6,35 +6,30 @@
     <title>friendsoflittleyus</title>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
+<script src="https://cdn.socket.io/4.1.2/socket.io.min.js"></script>
 <div class="container-fluid">
-    <p>This is an example implementation of the transaction.confirmed event using the
-        <a href="https://github.com/e-m-s-y/socket-event-forwarder">socket event forwarder plugin</a> created by
-        friendsoflittleyus. This plugin is currently installed on Radians and is configured to fire the
-        transaction.confirmed event at the 1st, 2nd, 3rd, 4th and 5th confirmation of a transaction. Developers can
-        configure the amount of confirmations themselves according to their own usecase. In this example a customer(you)
-        deposits tokens to an exchange. The exchange will add your funds to your exchange wallet after 5 network confirmations.</p>
-    <p>You can trigger this process yourself by sending 1 RADtoshi(0.00000001) to the following address:
-        TY1t98ThWZyUtcC76RL3nS3wRVRrwQNM4h<br>
-        <i class="small">No RAD tokens? You may use our <a href="https://t.me/nybbleFaucet">Telegram faucet</a> to get
-            some for free.</i><br>
-        <i class="small">ARK desktop wallet Radians seed: <a href="http://37.34.60.90:4040">http://37.34.60.90:4040</a></i>
-    </p>
-    <div class="col-xs-12 col-md-6 pt-4">
-        <label for="senderPublicKey">Enter your public key</label><br>
-        <input type="text" class="form-control" id="senderPublicKey" aria-describedby="senderPublicKeyHelp">
-        <small id="senderPublicKeyHelp" class="form-text text-muted">This is the public key of the address that you're
-            sending the deposit from, your key is used to identity your transaction. You can find your key in the ARK desktop
-            wallet by clicking the key icon.</small>
-        <div class="d-flex align-items-center pt-4">
-            <div id="spinner" class="spinner-border mr-3 text-success" role="status" aria-hidden="true"></div>
-            <span id="spinnerText">Waiting for deposit...</span>
-        </div>
+    <h2>Events</h2>
+    <div class="col-xs-12">
+        <ul id="list" class="list-group"></ul>
     </div>
 </div>
 </body>
 <script>
-	const socket = io('https://socket.radians.nl', {
+    var addRow = function(text) {
+        var ul = document.getElementById('list');
+        var li = document.createElement('li');
+        var pre = document.createElement('pre');
+
+        li.classList.add('list-group-item');
+        pre.classList.add('mb-0');
+
+        pre.textContent = text;
+
+        li.appendChild(pre);
+        ul.prepend(li);
+    };
+
+	const socket = io('31.14.97.163:3333', {
 		transports: ['websocket']
 	});
 	socket.on('connect', function() {
@@ -43,37 +38,23 @@
 	socket.on('error', function(data) {
 		console.error(data);
 	});
+    socket.on('block.applied', function(data) {
+        addRow('block.applied ' + JSON.stringify(data, undefined, 2));
+    });
 	socket.on('systeminformation', function(data) {
-		console.dirxml(data);
+        addRow('systeminformation ' + JSON.stringify(data, undefined, 2));
 	});
 	socket.on('network.latency', function(data) {
-		console.dirxml(data);
-	});
+        addRow('network.latency ' + JSON.stringify(data, undefined, 2));
+
+    });
 	socket.on('blockheight.current', function(data) {
-		console.dirxml(data);
-	});
+        addRow('blockheight.current ' + JSON.stringify(data, undefined, 2));
+
+    });
 	socket.on('transaction.confirmed', function(data) {
-		if(data.senderPublicKey === document.getElementById('senderPublicKey').value && data.recipientId === 'TY1t98ThWZyUtcC76RL3nS3wRVRrwQNM4h') {
-			switch(data.confirmations) {
-				case 1:
-					document.getElementById('spinnerText').innerHTML = 'Transaction received, 1st confirmation...';
-					break;
-				case 2:
-					document.getElementById('spinnerText').innerHTML = '2nd confirmation...';
-					break;
-				case 3:
-					document.getElementById('spinnerText').innerHTML = '3rd confirmation....';
-					break;
-				case 4:
-					document.getElementById('spinnerText').innerHTML = '4th confirmation, 1 more...';
-					break;
-				case 5:
-					document.getElementById('spinner').remove();
-					document.getElementById('spinnerText').innerHTML = '5th confirmation, your funds are deposited to your exchange wallet!';
-					break;
-			}
-		}
-	});
+        addRow('transaction.confirmed ' + JSON.stringify(data, undefined, 2));
+    });
 </script>
 </html>
 
