@@ -11,15 +11,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var Service_1;
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_kernel_1 = require("@arkecosystem/core-kernel");
+const socket_io_1 = require("socket.io");
 let Service = Service_1 = class Service {
     async listen(options) {
+        this.server = new socket_io_1.Server(options.port);
         const logger = this.app.get(core_kernel_1.Container.Identifiers.LogService);
         logger.info(JSON.stringify(options));
         const emitter = this.app.get(core_kernel_1.Container.Identifiers.EventDispatcherService);
         emitter.listen("block.applied", {
             handle: async (payload) => {
-                const data = JSON.stringify(payload);
-                logger.debug(`[${Service_1.ID}] ${data}`);
+                logger.debug(`[${Service_1.ID}] Forwarded event ${payload.name}`);
+                this.server.emit(payload.name, payload.data);
             },
         });
     }

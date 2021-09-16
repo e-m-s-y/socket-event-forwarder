@@ -1,4 +1,5 @@
 import { Container, Contracts } from "@arkecosystem/core-kernel";
+import { Server as SocketServer } from "socket.io";
 
 import { IOptions } from "./interfaces";
 
@@ -9,7 +10,11 @@ export default class Service {
     @Container.inject(Container.Identifiers.Application)
     private readonly app!: Contracts.Kernel.Application;
 
+    private server!: SocketServer;
+
     public async listen(options: IOptions): Promise<void> {
+        this.server = new SocketServer(options.port);
+
         const logger = this.app.get<Contracts.Kernel.Logger>(Container.Identifiers.LogService);
 
         logger.info(JSON.stringify(options));
@@ -18,9 +23,8 @@ export default class Service {
 
         emitter.listen("block.applied", {
             handle: async (payload: any) => {
-                const data = JSON.stringify(payload);
-
-                logger.debug(`[${Service.ID}] ${data}`);
+                logger.debug(`[${Service.ID}] Forwarded event ${payload.name}`);
+                this.server.emit(payload.name, payload.data);
             },
         });
     }
