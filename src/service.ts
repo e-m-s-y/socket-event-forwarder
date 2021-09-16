@@ -1,5 +1,6 @@
 import { Container, Contracts } from "@arkecosystem/core-kernel";
 import { Server as SocketServer } from "socket.io";
+import * as Systeminformation from "systeminformation";
 
 import { IOptions } from "./interfaces";
 
@@ -36,6 +37,13 @@ export default class Service {
                     this.server.emit(payload.name, payload.data);
                 },
             });
+        }
+
+        if (options.customEvents.includes("network.latency")) {
+            setInterval(async () => {
+                this.server.emit("network.latency", await Systeminformation.inetChecksite("https://google.com"));
+                logger.debug(`[${Service.ID}] Forwarded event network.latency`);
+            }, options.networkLatencyInterval);
         }
     }
 }
