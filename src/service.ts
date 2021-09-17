@@ -42,6 +42,32 @@ export default class Service {
             });
         }
 
+        if (options.customEvents.includes("systeminformation")) {
+            setInterval(async () => {
+                const packet = await Systeminformation.get({
+                    mem: "*",
+                    currentLoad: "*",
+                    cpuTemperature: "*",
+                    osInfo: "platform, release",
+                    cpu: "speed, cores, speedmin, speedmax, processors, physicalCores",
+                });
+
+                packet.fs = [];
+
+                for (const disk of await Systeminformation.fsSize()) {
+                    packet.fs.push({
+                        use: disk.use,
+                        size: disk.size,
+                        used: disk.used,
+                    });
+                }
+
+                this.server.emit("systeminformation", packet);
+                logger.debug(`[${Service.ID}] Forwarded event systeminformation`);
+
+            }, options.systeminformationInterval);
+        }
+
         if (options.customEvents.includes("network.latency")) {
             setInterval(async () => {
                 this.server.emit("network.latency", await Systeminformation.inetChecksite("https://google.com"));
