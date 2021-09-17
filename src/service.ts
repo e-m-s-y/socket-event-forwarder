@@ -83,5 +83,41 @@ export default class Service {
                 logger.debug(`[${Service.ID}] Forwarded event blockheight.current`);
             }, options.blockheightCurrentInterval);
         }
+
+        if (options.customEvents.includes("transaction.confirmed") && options.confirmations.length) {
+            const transactions: any[] = [];
+
+            emitter.listen("transaction.applied", {
+                handle: async (payload: any) => {
+                    payload.data.confirmations = 0;
+
+                    if (payload.data.senderPublicKey) {
+                        payload.data.senderId = walletRepository
+                            .findByPublicKey(payload.data.senderPublicKey)
+                            .getAddress();
+                    }
+
+                    transactions.push(payload.data);
+                },
+            });
+
+            emitter.listen("block.applied", {
+                handle: async (payload: any) => {
+                    for (const [index, transaction] of transactions.entries()) {
+                        transaction.confirmations += 1;
+
+                        if (options.confirmations.includes(transaction.confirmations)) {
+                            this.server.emit("transaction.confirmed", transaction);
+                            logger.debug(`[${Service.ID}] Forwarded event transaction.confirmed`);
+                        }
+
+                        if (transaction.confirmations >= Math.max(...options.confirmations)) {
+                            transactions.splice(index, 1);
+                            logger.debug(`[${Service.ID}] Removed transaction since the max confirmations is reached`);
+                        }
+                    }
+                },
+            });
+        }
     }
 }
