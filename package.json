@@ -15,6 +15,9 @@
         "build": "yarn clean && yarn compile",
         "clean": "rimraf dist"
     },
+    "files": [
+        "dist"
+    ],
     "homepage": "https://github.com/e-m-s-y/socket-event-forwarder",
     "repository": {
         "type": "git",
