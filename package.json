@@ -6,9 +6,11 @@
     "license": "MIT",
     "main": "dist/service-provider.js",
     "dependencies": {
-        "@arkecosystem/core-kernel": "3.0.0-next.35",
         "socket.io": "^4.2.0",
         "systeminformation": "^5.9.2"
+    },
+    "devDependencies": {
+        "@arkecosystem/core-kernel": "^3.0.0 || ^3.0.0-next.0"
     },
     "scripts": {
         "compile": "../../node_modules/typescript/bin/tsc",
