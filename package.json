@@ -1,7 +1,7 @@
 {
     "name": "@foly/socket-event-forwarder",
     "version": "2.0.0",
-    "description": "A plugin which sends real-time socket events from an bridgechain node towards connected clients.",
+    "description": "A plugin which sends real-time socket events from a bridgechain node towards connected clients.",
     "author": "emsy",
     "license": "MIT",
     "main": "dist/service-provider.js",
