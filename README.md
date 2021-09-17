@@ -11,8 +11,8 @@ Supported blockchain events can be found [here.](https://github.com/ArkEcosystem
 - `blockheight.current` fires the current synced blockheight at an configurable interval.
 
 ## Installation
-1. `yarn global add @foly/socket-event-forwarder`
-2. Customize the plugin configuration to your needs
+1. `yarn global add @foly/socket-event-forwarder`.
+2. Customize the plugin configuration to your needs.
 3. Add the configuration to `~/.config/{bridgechain-core}/{mainnet|devnet|testnet}/app.json` at the bottom of relay.plugins.
 3. Restart your relay process.
 
