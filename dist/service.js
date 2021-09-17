@@ -38,11 +38,10 @@ let Service = Service_1 = class Service {
         const logger = this.app.get(core_kernel_1.Container.Identifiers.LogService);
         logger.info(JSON.stringify(options));
         const emitter = this.app.get(core_kernel_1.Container.Identifiers.EventDispatcherService);
-        const walletRepository = this.app.get(core_kernel_1.Container.Identifiers.WalletRepository);
+        const walletRepository = this.app.getTagged(core_kernel_1.Container.Identifiers.WalletRepository, "state", "blockchain");
         for (const event of options.events) {
             emitter.listen(event, {
                 handle: async (payload) => {
-                    // TODO test if this still works...
                     if (payload.data && payload.data.generatorPublicKey) {
                         payload.data.username = walletRepository
                             .findByPublicKey(payload.data.generatorPublicKey)
@@ -52,6 +51,27 @@ let Service = Service_1 = class Service {
                     this.server.emit(payload.name, payload.data);
                 },
             });
+        }
+        if (options.customEvents.includes("systeminformation")) {
+            setInterval(async () => {
+                const packet = await Systeminformation.get({
+                    mem: "*",
+                    currentLoad: "*",
+                    cpuTemperature: "*",
+                    osInfo: "platform, release",
+                    cpu: "speed, cores, speedmin, speedmax, processors, physicalCores",
+                });
+                packet.fs = [];
+                for (const disk of await Systeminformation.fsSize()) {
+                    packet.fs.push({
+                        use: disk.use,
+                        size: disk.size,
+                        used: disk.used,
+                    });
+                }
+                this.server.emit("systeminformation", packet);
+                logger.debug(`[${Service_1.ID}] Forwarded event systeminformation`);
+            }, options.systeminformationInterval);
         }
         if (options.customEvents.includes("network.latency")) {
             setInterval(async () => {
@@ -65,6 +85,35 @@ let Service = Service_1 = class Service {
                 this.server.emit("blockheight.current", stateStore.getLastHeight());
                 logger.debug(`[${Service_1.ID}] Forwarded event blockheight.current`);
             }, options.blockheightCurrentInterval);
+        }
+        if (options.customEvents.includes("transaction.confirmed") && options.confirmations.length) {
+            const transactions = [];
+            emitter.listen("transaction.applied", {
+                handle: async (payload) => {
+                    payload.data.confirmations = 0;
+                    if (payload.data.senderPublicKey) {
+                        payload.data.senderId = walletRepository
+                            .findByPublicKey(payload.data.senderPublicKey)
+                            .getAddress();
+                    }
+                    transactions.push(payload.data);
+                },
+            });
+            emitter.listen("block.applied", {
+                handle: async (payload) => {
+                    for (const [index, transaction] of transactions.entries()) {
+                        transaction.confirmations += 1;
+                        if (options.confirmations.includes(transaction.confirmations)) {
+                            this.server.emit("transaction.confirmed", transaction);
+                            logger.debug(`[${Service_1.ID}] Forwarded event transaction.confirmed`);
+                        }
+                        if (transaction.confirmations >= Math.max(...options.confirmations)) {
+                            transactions.splice(index, 1);
+                            logger.debug(`[${Service_1.ID}] Removed transaction since the max confirmations is reached`);
+                        }
+                    }
+                },
+            });
         }
     }
 };
