@@ -36,7 +36,6 @@ let Service = Service_1 = class Service {
     async listen(options) {
         this.server = new socket_io_1.Server(options.port);
         const logger = this.app.get(core_kernel_1.Container.Identifiers.LogService);
-        logger.info(JSON.stringify(options));
         const emitter = this.app.get(core_kernel_1.Container.Identifiers.EventDispatcherService);
         const walletRepository = this.app.getTagged(core_kernel_1.Container.Identifiers.WalletRepository, "state", "blockchain");
         for (const event of options.events) {
