@@ -21,12 +21,15 @@ export default class Service {
         logger.info(JSON.stringify(options));
 
         const emitter = this.app.get<Contracts.Kernel.EventDispatcher>(Container.Identifiers.EventDispatcherService);
-        const walletRepository = this.app.get<Contracts.State.WalletRepository>(Container.Identifiers.WalletRepository);
+        const walletRepository = this.app.getTagged<Contracts.State.WalletRepository>(
+            Container.Identifiers.WalletRepository,
+            "state",
+            "blockchain",
+        );
 
         for (const event of options.events) {
             emitter.listen(event, {
                 handle: async (payload: any) => {
-                    // TODO test if this still works...
                     if (payload.data && payload.data.generatorPublicKey) {
                         payload.data.username = walletRepository
                             .findByPublicKey(payload.data.generatorPublicKey)
