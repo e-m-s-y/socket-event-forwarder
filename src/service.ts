@@ -17,9 +17,6 @@ export default class Service {
         this.server = new SocketServer(options.port);
 
         const logger = this.app.get<Contracts.Kernel.Logger>(Container.Identifiers.LogService);
-
-        logger.info(JSON.stringify(options));
-
         const emitter = this.app.get<Contracts.Kernel.EventDispatcher>(Container.Identifiers.EventDispatcherService);
         const walletRepository = this.app.getTagged<Contracts.State.WalletRepository>(
             Container.Identifiers.WalletRepository,
