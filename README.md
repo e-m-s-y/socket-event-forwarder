@@ -54,6 +54,10 @@ Use these steps if you installed your node using Git clone.
     }
 }
 ```
+
+## Examples
+Delegate friendsoflittleyus provides several public endpoints for you to use, check out [our website](https://friendsoflittleyus.nl/ark-bridgechain-plugins/socket-event-forwarder/) for examples and additional information.
+
 ## Credits
 
 - [e-m-s-y](https://github.com/e-m-s-y)
