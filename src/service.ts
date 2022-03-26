@@ -1,4 +1,4 @@
-import { Container, Contracts } from "@arkecosystem/core-kernel";
+import { Container, Contracts } from "@solar-network/core-kernel";
 import { Server as SocketServer } from "socket.io";
 import * as Systeminformation from "systeminformation";
 

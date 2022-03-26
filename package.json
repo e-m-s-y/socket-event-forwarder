@@ -10,12 +10,11 @@
         "systeminformation": "^5.9.2"
     },
     "devDependencies": {
-        "@arkecosystem/core-kernel": "^3.0.0 || ^3.0.0-next.0",
-        "typescript": "^4.5.5"
+        "@solar-network/core-kernel": "^3.2.0"
     },
     "scripts": {
-        "compile": "./node_modules/typescript/bin/tsc",
-        "build": "yarn clean && yarn compile",
+        "compile": "../../node_modules/typescript/bin/tsc",
+        "build": "pnpm clean && pnpm compile",
         "clean": "rimraf dist"
     },
     "files": [

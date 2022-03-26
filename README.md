@@ -10,22 +10,21 @@ Supported blockchain events can be found [here.](https://github.com/ArkEcosystem
 - `network.latency` fires the stats of a HTTP request to measure latency in milliseconds at an configurable interval.
 - `blockheight.current` fires the current synced blockheight at an configurable interval.
 
-## Installation
-### Yarn
-Use these steps if you installed your node using Yarn.
-1. `yarn global add @foly/socket-event-forwarder`.
-2. Customize the plugin configuration to your needs.
-3. Add the configuration to `~/.config/{bridgechain-core}/{mainnet|devnet|testnet}/app.json` at the bottom of relay.plugins.
-3. Restart your relay process.
+## Prerequisites
+Add the following pnpm alias to `~/.solarrc` if you haven't already. Replace `{user}` with the user's name.
 
-### Git source
+`alias pnpm="source /home/{user}/.solar/.env; /home/{user}/.solar/.pnpm/bin/pnpm"`.
+
+Restart your SSH session once added.
+
+## Installation
 Use these steps if you installed your node using Git clone.
-1. Go to the plugin directory `cd ~/{bridgechain-core}/plugins`.
-2. Clone the plugin `git clone https://github.com/e-m-s-y/socket-event-forwarder`.
-3. Install and build the plugin `cd socket-event-forwarder && yarn install && yarn compile`.
-4. Bootstrap the plugin using `cd .. && yarn bootstrap`.
+
+1. Go to the plugin directory `cd ~/solar-core/plugins`.
+2. Clone the plugin `git clone https://github.com/e-m-s-y/socket-event-forwarder -b solar`.
+3. Install and build the plugin `cd socket-event-forwarder && pnpm install && pnpm build`.
 5. Customize the plugin configuration to your needs.
-6. Add the configuration to `~/.config/{bridgechain-core}/{mainnet|devnet|testnet}/app.json` at the bottom of relay.plugins.
+6. Add the configuration to `~/.config/solar-core/{mainnet|testnet}/app.json` at the bottom of relay.plugins.
 7. Restart your relay process.
 
 #### Plugin configuration example
