@@ -38,7 +38,7 @@ Use these steps if you installed your node using Git clone.
             "block.applied",
             "block.forged",
             "round.applied",
-            "transaction.applied",
+            "transaction.applied"
         ],
         "confirmations": [1, 2, 3, 4, 5],
         "customEvents": [
