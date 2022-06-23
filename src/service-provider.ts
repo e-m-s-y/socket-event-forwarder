@@ -1,4 +1,4 @@
-import { Container, Contracts, Providers } from "@solar-network/core-kernel";
+import { Container, Contracts, Providers } from "@solar-network/kernel";
 
 import { IOptions } from "./interfaces";
 import Service from "./service";
