@@ -1,6 +1,6 @@
 {
     "name": "@foly/socket-event-forwarder",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "A plugin which sends real-time socket events from a bridgechain node towards connected clients.",
     "author": "emsy",
     "license": "MIT",
@@ -8,7 +8,7 @@
     "dependencies": {
         "socket.io": "^4.2.0",
         "systeminformation": "^5.9.2",
-        "@solar-network/core-kernel": "workspace:*"
+        "@solar-network/kernel": "workspace:*"
     },
     "scripts": {
         "compile": "../../node_modules/typescript/bin/tsc",
